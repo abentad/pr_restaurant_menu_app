@@ -10,7 +10,7 @@ class ApiController extends GetxController {
   late RxList<Food> _foodsList = RxList<Food>();
   late bool _isLoading;
 
-  List<Restaurant>? get restaurantList => _restaurantList;
+  List<Restaurant> get restaurantList => _restaurantList;
   List<Food> get foodsList => _foodsList;
   bool get isLoading => _isLoading;
 
