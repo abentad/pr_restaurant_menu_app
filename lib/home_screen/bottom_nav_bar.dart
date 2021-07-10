@@ -23,12 +23,15 @@ BottomNavyBar buildBottomNavigationBar({required int selectedIndex, required Fun
 
 BottomNavyBarItem buildNavBarItem({required String title, required String iconFileName}) {
   return BottomNavyBarItem(
-    icon: SvgPicture.asset('assets/$iconFileName', width: 25.0, color: Color(0xffD54C4C)),
+    // icon: SvgPicture.asset('assets/$iconFileName', width: 25.0, color: Color(0xffD54C4C)),
+    icon: SvgPicture.asset('assets/$iconFileName', width: 25.0, color: Colors.teal),
     title: Text(
       title,
-      style: TextStyle(color: Color(0xffDF5E5E), fontWeight: FontWeight.w500, fontSize: 15.0),
+      // style: TextStyle(color: Color(0xffDF5E5E), fontWeight: FontWeight.w500, fontSize: 15.0),
+      style: TextStyle(color: Colors.teal, fontWeight: FontWeight.w500, fontSize: 15.0),
     ),
-    activeColor: Color(0xffD54C4C),
+    // activeColor: Color(0xffD54C4C),
+    activeColor: Colors.teal,
     inactiveColor: Colors.green,
     textAlign: TextAlign.center,
   );

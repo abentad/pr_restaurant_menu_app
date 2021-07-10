@@ -75,8 +75,12 @@ SafeArea buildDiscover({required Size size}) {
                       physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemCount: controller.restaurantList.length,
-                      itemBuilder: (context, index) =>
-                          buildcard(size: size, title: controller.restaurantList[index].restaurantName.capitalize, desc: controller.restaurantList[index].restaurantId.toString()),
+                      itemBuilder: (context, index) => buildcard(
+                        size: size,
+                        title: controller.restaurantList[index].restaurantName.capitalize,
+                        desc: controller.restaurantList[index].restaurantId.toString(),
+                        imageUrl: controller.restaurantList[index].restaurantImage.toString(),
+                      ),
                     ),
                   ),
                 ),
@@ -173,14 +177,18 @@ SafeArea buildDiscover({required Size size}) {
   );
 }
 
-buildcard({String? title, String? desc, Size? size}) {
+buildcard({String? title, String? desc, Size? size, required String? imageUrl}) {
   return Padding(
     padding: const EdgeInsets.only(left: 20.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(20.0)),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(20.0),
+            image: DecorationImage(image: NetworkImage(imageUrl!), fit: BoxFit.fill),
+          ),
           height: size!.height * 0.2,
           width: size.width * 0.38,
         ),
