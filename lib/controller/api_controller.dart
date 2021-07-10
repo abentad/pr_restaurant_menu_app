@@ -8,16 +8,17 @@ import 'package:http/http.dart' as http;
 class ApiController extends GetxController {
   late RxList<Restaurant> _restaurantList = RxList<Restaurant>();
   late RxList<Food> _foodsList = RxList<Food>();
-  late Rx<bool> _isLoading = true.obs;
+  late bool _isLoading;
 
   List<Restaurant>? get restaurantList => _restaurantList;
   List<Food> get foodsList => _foodsList;
-  bool get isLoading => _isLoading as bool;
+  bool get isLoading => _isLoading;
 
   @override
   void onInit() {
     getRestaurantList();
     getFoodList();
+    _isLoading = true;
     super.onInit();
   }
 
@@ -28,7 +29,7 @@ class ApiController extends GetxController {
     for (var i = 0; i < decodedData.length; i++) {
       _restaurantList.add(Restaurant.fromJson(decodedData[i]));
     }
-    _isLoading = false as Rx<bool>;
+    _isLoading = false;
     update();
     print(_restaurantList);
   }
@@ -40,7 +41,7 @@ class ApiController extends GetxController {
     for (var i = 0; i < decodedData.length; i++) {
       _foodsList.add(Food.fromJson(decodedData[i]));
     }
-    _isLoading = false as Rx<bool>;
+    _isLoading = false;
     update();
     print(_foodsList);
   }
