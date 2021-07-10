@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:foodmenu/controller/api_controller.dart';
 import 'package:foodmenu/home.dart';
+import 'package:foodmenu/loading.dart';
+import 'package:get/get.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.white,
-    statusBarIconBrightness: Brightness.dark, // status bar color
-  ));
+  WidgetsFlutterBinding.ensureInitialized();
+  Get.put(ApiController());
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   statusBarColor: Colors.white,
+  //   statusBarIconBrightness: Brightness.light, // status bar color
+  // ));
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Fooder',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
         scaffoldBackgroundColor: Color(0xfff2f2f2),
       ),
-      home: Home(),
+      home: Loading(),
     );
   }
 }

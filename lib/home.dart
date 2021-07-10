@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foodmenu/controller/api_controller.dart';
+import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
-  final cardtitles = ["Burgers", "Salads", "Noodles", "Ertib", "Chicken wings"];
-  final carddescription = [
-    "22 restaurants",
-  ];
+  final ApiController _apiController = Get.find<ApiController>();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -12,17 +12,13 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
+          physics: BouncingScrollPhysics(),
           slivers: [
             SliverAppBar(
               pinned: false,
               snap: false,
               floating: false,
               expandedHeight: 280.0,
-              // flexibleSpace: const FlexibleSpaceBar(
-              //   title: Text('sliver app bar'),
-              //   // background: Image(image: image),
-              //   background: ,
-              // ),
               backgroundColor: Colors.transparent,
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.parallax,
@@ -50,9 +46,6 @@ class Home extends StatelessWidget {
               floating: false,
               expandedHeight: 70.0,
               backgroundColor: Colors.transparent,
-              // flexibleSpace: const FlexibleSpaceBar(
-              //   title: Text('centered text inside sliverappbar'),
-              // ),
               shadowColor: Colors.transparent,
               flexibleSpace: Container(
                 height: 70.0,
@@ -69,8 +62,6 @@ class Home extends StatelessWidget {
             ),
             SliverToBoxAdapter(
               child: Container(
-                // height: size.height,
-                // width: size.width,
                 decoration: BoxDecoration(color: Color(0xfff3f3f3)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,50 +72,56 @@ class Home extends StatelessWidget {
                       child: Text('Explore Top Categories', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0)),
                     ),
                     SizedBox(height: size.height * 0.035),
-                    Container(
-                      height: 230,
-                      child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: cardtitles.length,
-                        itemBuilder: (context, index) => buildcard(size: size, title: cardtitles[index], desc: carddescription[0]),
+                    GetBuilder<ApiController>(
+                      builder: (controller) => Container(
+                        height: 230,
+                        child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _apiController.restaurantList!.length,
+                          itemBuilder: (context, index) => buildcard(
+                              size: size, title: controller.restaurantList![index].restaurantName.capitalize, desc: controller.restaurantList![index].restaurantId.toString()),
+                        ),
                       ),
                     ),
-                    SizedBox(height: size.height * 0.06),
+                    SizedBox(height: size.height * 0.03),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Text('Popular right now', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0)),
                     ),
-                    SizedBox(height: size.height * 0.03),
-                    Container(
-                      height: 230,
-                      child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 3,
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(20.0)),
-                                height: size.height * 0.2,
-                                width: size.width * 0.38,
-                              ),
-                              SizedBox(height: size.height * 0.02),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Moki', style: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w600)),
-                                    SizedBox(height: size.height * 0.01),
-                                    Text('Japanesse-korean', style: TextStyle(color: Colors.grey)),
-                                  ],
+                    SizedBox(height: size.height * 0.02),
+                    GetBuilder<ApiController>(
+                      builder: (controller) => Container(
+                        height: 230,
+                        child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: controller.foodsList.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(20.0)),
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.38,
                                 ),
-                              )
-                            ],
+                                SizedBox(height: size.height * 0.02),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(controller.foodsList[index].foodName.capitalize.toString(),
+                                          style: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w600)),
+                                      SizedBox(height: size.height * 0.01),
+                                      Text(controller.foodsList[index].foodPrice, style: TextStyle(color: Colors.grey)),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
